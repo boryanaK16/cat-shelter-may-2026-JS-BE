@@ -1,0 +1,21 @@
+{
+  "name": "cat-shelter-may-2026-js-be",
+  "version": "1.0.0",
+  "description": "Course project from workshop",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE/issues"
+  },
+  "homepage": "https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE#readme"
+}
