@@ -20,7 +20,10 @@ const server = http.createServer(async (req, res) => {
             addBreed(breedName);
          })
     
-         return res.end();
+        //  return res.end();
+
+        //Redirect to new page after adding the breed
+        return res.writeHead(302, { Location: '/'}).end();
     }
 
     //Get Requests
