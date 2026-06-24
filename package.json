@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE/issues"
   },
-  "homepage": "https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE#readme"
+  "homepage": "https://github.com/boryanaK16/cat-shelter-may-2026-JS-BE#readme",
+  "dependencies": {
+    "uuid": "^14.0.1"
+  }
 }
