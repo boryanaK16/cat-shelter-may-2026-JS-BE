@@ -2,28 +2,48 @@ import http from 'http'
 import fs from 'fs/promises'
 import cats from './cats.js'
 import breeds from './breeds.js'
+import { addCat, readCats } from './catsService.js'
 import { addBreed, readBreads } from './breedService.js'
 
 const server = http.createServer(async (req, res) => {
     console.log(readBreads());
-    
+
     if (req.method === 'POST' && req.url === '/cats/add-breed') {
-        let body = '';
+        const bodyFormData = await readBodyFormData(req);
+        addBreed(bodyFormData.get('breed'));
 
-         req.on('data', (chunk) => {
-            body += chunk
-         });
+        // let body = '';
 
-         req.on('end', async () => {
-            const formData = new URLSearchParams(body);
-            const breedName = formData.get('breed');
-            addBreed(breedName);
-         })
-    
+        // req.on('data', (chunk) => {
+        //     body += chunk
+        // });
+
+        // req.on('end', async () => {
+        //     const formData = new URLSearchParams(body);
+        //     const breedName = formData.get('breed');
+        //     addBreed(breedName);
+        // })
+
         //  return res.end();
 
         //Redirect to new page after adding the breed
-        return res.writeHead(302, { Location: '/'}).end();
+        return res.writeHead(302, { Location: '/' }).end();
+    }
+
+    if (req.method === 'POST' && req.url === '/cats/add-cat') {
+        const bodyFormData = await readBodyFormData(req);
+
+        const newCat = {
+            name: bodyFormData.get('name'),
+            desccription: bodyFormData.get('description'),
+            imgUrl: bodyFormData.get('imageUrl'),
+            breed: bodyFormData.get('breed')
+        }
+
+        // cats.push(newCat);
+        addCat(newCat)
+        return res.writeHead(302, { Location: '/' }).end();
+
     }
 
     //Get Requests
@@ -67,8 +87,6 @@ const server = http.createServer(async (req, res) => {
     res.end();
 })
 
-server.listen(5000, () => console.log('Server is listening on port http://localhost:5000'));
-
 async function renderHomePage() {
     let htmlContent = await fs.readFile('./src/views/home/index.html', 'utf-8');
 
@@ -97,3 +115,20 @@ async function renderAddCatPage(params) {
     const result = htmlContent.replace('{{breedOptions}}', breedOptions);
     return result;
 }
+
+function readBodyFormData(req) {
+    return new Promise((resolve, reject) => {
+        let body = '';
+
+        req.on('data', (chunk) => {
+            body += chunk
+        });
+
+        req.on('end', () => {
+            const formData = new URLSearchParams(body);
+            resolve(formData);
+        })
+    })
+}
+
+server.listen(5000, () => console.log('Server is listening on port http://localhost:5000'));
